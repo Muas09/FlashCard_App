@@ -4,6 +4,9 @@ import { View, Text, StyleSheet } from 'react-native';
 const SettingsScreen = () => {
     return (
         <View style={styles.container}>
+            <View>
+                <Text style={styles.headerText}>Page 2</Text>
+            </View>
             <Text style={styles.title}>Settings</Text>
             {/* Đây là nơi để bạn thêm các thiết lập */}
         </View>
@@ -22,6 +25,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
     },
+    headerText: {
+        marginBottom: 500,
+        fontSize:24,
+    }
+    
     // Thêm các kiểu CSS khác tùy theo nhu cầu của bạn
 });
 

@@ -1,7 +1,6 @@
-
-
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import PlayScreen from './components/PlayScreen';
 import SettingsScreen from './components/SettingsScreen';
 
@@ -9,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 'play', // Trang ban đầu là "play"
+      currentPage: 'play', // Initial page is "play"
     };
   }
 
@@ -20,24 +19,42 @@ class App extends Component {
     } else if (currentPage === 'settings') {
       return <SettingsScreen />;
     }
+    // Handle other cases or unexpected values of currentPage here
+    return null;
   };
 
   render() {
+    const { currentPage } = this.state;
     return (
       <View style={styles.container}>
         {this.renderPage()}
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={[styles.button, styles.playButton]}
+            style={[styles.button, styles.playButton, { backgroundColor: 'white' }]}
             onPress={() => this.setState({ currentPage: 'play' })}
           >
-            <Text style={styles.buttonText}>Play</Text>
+            <View style={styles.buttonContent}>
+              <View style={styles.iconContainer}>
+                <Icon name="play-circle" size={30} color={currentPage === 'play' ? 'red' : '#8B4513'} />
+              </View>
+              
+              <Text style={[styles.buttonText, { color: currentPage === 'play' ? 'red' : '#8B4513' }]}>
+                Play
+              </Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, styles.settingsButton]}
+            style={[styles.button, styles.settingsButton, { backgroundColor: 'white' }]}
             onPress={() => this.setState({ currentPage: 'settings' })}
           >
-            <Text style={styles.buttonText}>Settings</Text>
+            <View style={styles.buttonContent}>
+              <View style={styles.iconContainer}>
+                <Icon name="cog" size={30} color={currentPage === 'settings' ? 'red' : '#8B4513'} />
+              </View>
+              <Text style={[styles.buttonText, { color: currentPage === 'settings' ? 'red' : '#8B4513' }]}>
+                Settings
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -47,7 +64,6 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    
     flex: 1,
     backgroundColor: '#DCDCDC',
     justifyContent: 'center',
@@ -56,25 +72,28 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    
   },
   button: {
-    marginTop:15,
-    width:300,
+    marginTop: 15,
+    width: 250,
+    height: 90,
     borderRadius: 5,
+    alignItems: 'center',
+    flexDirection: 'row',
   },
-  playButton: {
-    padding: 30,
-    backgroundColor: 'white', // White background
-  },
-  settingsButton: {
-    padding: 30,
-    backgroundColor: 'white', // White background
-  },
-  buttonText: {
-    color: '#8B4513', // Brown text color
+  buttonContent: {
+    flexDirection: 'column',
+    alignItems: 'center',
     textAlign: 'center',
-    fontSize: 15,
+  },
+  playButton: {},
+  settingsButton: {},
+  buttonText: {
+    fontSize: 18,
+    marginLeft: 100,
+  },
+  iconContainer: {
+    marginLeft: 100, // Đặt khoảng cách 100px từ phía trái
   },
 });
 

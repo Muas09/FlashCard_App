@@ -60,19 +60,24 @@ class PlayScreen extends Component {
 
     removeCardFromDeck = () => {
         const { currentIndex, flashcards } = this.state;
-        if (flashcards.length > 0) {
-            flashcards.splice(currentIndex, 1);
-            this.setState({
-                flashcards: flashcards,
-                currentIndex: 0,
-                showAnswer: false,
-            });
-            // Kiểm tra nếu không còn thẻ, thì đặt lại deck ban đầu
-            if (flashcards.length === 0) {
-                this.resetDeck();
-            }
+        if (flashcards.length === 1) {
+            return;
         }
+
+        if (currentIndex === flashcards.length - 1) {
+            // Nếu currentIndex là trang cuối cùng, điều chỉnh currentIndex để tránh lỗi
+            this.setState({
+                currentIndex: currentIndex - 1,
+            });
+        }
+
+        flashcards.splice(currentIndex, 1);
+        this.setState({
+            flashcards: flashcards,
+            showAnswer: false,
+        });
     };
+
 
     resetDeck = () => {
         this.setState({
@@ -109,7 +114,12 @@ class PlayScreen extends Component {
 
         return (
             <TouchableWithoutFeedback onPress={this.toggleAnswer}>
+                
                 <View>
+                    <View>
+                        <Text style={styles.headerText}>Page 1</Text>
+                    </View>
+                    
                     <View style={[styles.container, showAnswer ? styles.answerContainer : styles.questionContainer]}>
                         <Text style={styles.answerText}>{showAnswer ? currentFlashcard.answer : currentFlashcard.content}</Text>
                     </View>
@@ -138,11 +148,11 @@ class PlayScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         width: 390,
-        height: 450,
+        height: 420,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
-        marginTop: 50,
+        marginTop: 20,
     },
     answerContainer: {
         backgroundColor: '#DC134C',
@@ -159,7 +169,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-        marginTop: 20,
+        marginTop: 10,
     },
     button: {
         width: 100,
@@ -193,6 +203,15 @@ const styles = StyleSheet.create({
         color: '#DC134C',
         fontSize: 16,
         textAlign: 'center',
+    },
+    headerText: {
+        width: 400,
+        height:50,
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 20,
+        backgroundColor: '#DCDCDC',
     },
 });
 
